@@ -1,29 +1,35 @@
-import { ArrowRight, Menu, X, Brain, TrendingUp, Camera, BarChart3, Download, CheckCircle, Users, Target, Zap, Chrome } from "lucide-react";
+import { ArrowRight, Menu, X, Brain, TrendingUp, Camera, BarChart3, Download, CheckCircle, Users, Target, Zap, Chrome, ArrowUp } from "lucide-react";
 import { useState, useEffect } from "react";
+
 
 export default function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+ useEffect(() => {
+    if (window.location.hash) {
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        window.history.replaceState(null, document.title, window.location.pathname);
+      }, 0);
+    }
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-950 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white overflow-x-hidden">
       {/* Navigation */}
-      <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-        scrollY > 50 ? 'bg-black/95 backdrop-blur-xl border-b border-gray-800/50' : 'bg-transparent'
-      }`}>
+<nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+  scrollY > 0  // Changed from 50 to 0 for immediate effect
+    ? 'bg-black/95 backdrop-blur-md border-b border-gray-800/50' 
+    : 'bg-transparent'
+}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center">
               <Brain className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
-              Tradilyze
+              Chartilyze
             </span>
           </div>
 
@@ -71,8 +77,8 @@ export default function HomePage() {
       <section className="relative min-h-screen flex items-center justify-center pt-20">
         {/* Background Effects */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full filter blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 text-center">
@@ -91,7 +97,7 @@ export default function HomePage() {
             </h1>
             
             <p className="mb-12 text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Stop filling endless spreadsheets. Tradilyze automatically captures your TradingView trades, 
+              Stop filling endless spreadsheets. Chartilyze automatically captures your TradingView trades, 
               analyzes your psychology, and turns your trading data into meaningful insights.
             </p>
             
@@ -116,7 +122,7 @@ export default function HomePage() {
                     <div className="w-6 h-6 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center">
                       <Brain className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-semibold">Tradilyze Dashboard</span>
+                    <span className="font-semibold">Chartilyze Dashboard</span>
                   </div>
                   <div className="flex items-center gap-4 text-sm text-gray-400">
                     <span className="flex items-center gap-1">
@@ -165,7 +171,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              How Tradilyze
+              How Chartilyze
               <span className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent"> Works</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
@@ -234,7 +240,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-8">
-                What makes Tradilyze
+                What makes Chartilyze
                 <span className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent"> unique?</span>
               </h2>
               
@@ -261,7 +267,7 @@ export default function HomePage() {
                     icon: <Users className="w-6 h-6" />
                   }
                 ].map((feature, index) => (
-                  <div key={index} className="flex items-start gap-4">
+                  <div key={index} className="flex items-start gap-4 p-6 rounded-xl transition-all duration-300 hover:bg-gray-800/30 hover:shadow-lg hover:shadow-emerald-500/10">
                     <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-xl flex items-center justify-center border border-emerald-500/30">
                       {feature.icon}
                     </div>
@@ -274,9 +280,9 @@ export default function HomePage() {
               </div>
             </div>
             
-            <div className="relative">
+             <div className="relative">
               <div className="bg-gradient-to-b from-gray-900/50 to-gray-900/20 backdrop-blur-sm rounded-2xl p-8 border border-gray-800">
-                <h3 className="text-2xl font-bold mb-6 text-center">Tradilyze vs Others</h3>
+                <h3 className="text-2xl font-bold mb-6 text-center">Chartilyze vs Others</h3>
                 <div className="space-y-4">
                   {[
                     { feature: "Browser extension auto-logging", tradilyze: true, others: false },
@@ -304,7 +310,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <div className="flex justify-between text-sm text-gray-400 mt-4">
-                  <span>Tradilyze</span>
+                  <span>Chartilyze</span>
                   <span>Other Journals</span>
                 </div>
               </div>
@@ -314,7 +320,7 @@ export default function HomePage() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-32">
+      <section id="pricing" className="py-32 relative">
         <div className="mx-auto max-w-7xl px-6">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -356,7 +362,7 @@ export default function HomePage() {
                 key={index}
                 className={`relative rounded-2xl p-8 transition-all duration-300 hover:transform hover:scale-105 ${
                   plan.popular 
-                    ? 'bg-gradient-to-b from-emerald-900/30 to-emerald-900/10 border-2 border-emerald-500' 
+                    ? 'bg-gradient-to-b from-emerald-900/30 to-emerald-900/10 border-2 border-emerald-500 shadow-xl shadow-emerald-500/20' 
                     : 'bg-gradient-to-b from-gray-900/50 to-gray-900/20 border border-gray-700 hover:border-gray-600'
                 }`}
               >
@@ -398,13 +404,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          
-          <div className="text-center mt-12">
-            <p className="text-gray-400">
-              All paid plans include a <span className="text-emerald-400 font-semibold">14-day free trial</span>. 
-              No credit card required.
-            </p>
-          </div>
         </div>
       </section>
 
@@ -415,7 +414,7 @@ export default function HomePage() {
             Ready to level up your trading?
           </h2>
           <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Join thousands of traders who've improved their consistency and psychology with Tradilyze.
+            Join thousands of traders who've improved their consistency and psychology with Chartilyze.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 rounded-lg flex items-center justify-center">
@@ -472,36 +471,55 @@ export default function HomePage() {
                 <Brain className="w-4 h-4 text-white" />
               </div>
               <span className="font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
-                Tradilyze
+                Chartilyze
               </span>
             </div>
             <div className="text-gray-400 text-sm">
-              © 2024 Tradilyze. All rights reserved.
+              © 2025 Chartilyze. All rights reserved.
             </div>
           </div>
         </div>
       </footer>
 
-      <style>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out;
-        }
-        
-        .delay-300 {
-          animation-delay: 300ms;
-        }
-      `}</style>
+      {/* Scroll to Top Button */}
+
     </div>
   );
 }
+
+const ScrollToTopButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  return (
+    <>
+      {isVisible && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 bg-emerald-500 text-white p-3 rounded-full shadow-lg hover:bg-emerald-600 transition-all duration-300"
+        >
+          <ArrowUp className="w-6 h-6" />
+        </button>
+      )}
+    </>
+  );
+};

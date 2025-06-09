@@ -117,9 +117,9 @@
     }
   },
   "reactRouterConfig": {
-    "appDirectory": "/Users/michaelshimeles/Desktop/rsk/app",
+    "appDirectory": "/Users/islamhm/Tradilyze-app/app",
     "basename": "/",
-    "buildDirectory": "/Users/michaelshimeles/Desktop/rsk/build",
+    "buildDirectory": "/Users/islamhm/Tradilyze-app/build",
     "future": {
       "unstable_middleware": false,
       "unstable_optimizeDeps": false,
