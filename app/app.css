@@ -162,9 +162,27 @@
 }
 
 .delay-300 {
-  animation-delay: 300ms;
+  animation-delay: 400ms;
 }
 
 html {
   scroll-behavior: smooth;
 }
+@keyframes glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(2); }
+}
+
+.animate-glow {
+  animation: glow 4s ease-in-out infinite;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.rotate-x-2 {
+  transform: rotateX(2deg);
+}
+
+    

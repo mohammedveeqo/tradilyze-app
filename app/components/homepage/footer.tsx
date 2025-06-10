@@ -1,39 +1,60 @@
-import { Link } from "react-router";
+// components/homepage/Footer.tsx
+import { Brain } from 'lucide-react';
 
-export default function FooterSection() {
+const footerLinks = [
+  {
+    title: "Product",
+    links: ["Extension", "Features", "Pricing", "Demo"]
+  },
+  {
+    title: "Resources",
+    links: ["Blog", "Trading Psychology", "Tutorials", "Help Center"]
+  },
+  {
+    title: "Community",
+    links: ["Discord", "Reddit", "Twitter", "Feedback"]
+  },
+  {
+    title: "Company",
+    links: ["About", "Privacy", "Terms", "Contact"]
+  }
+];
+
+export const Footer = () => {
   return (
-    <footer className="py-16 md:py-32">
-      <div className="mx-auto max-w-5xl px-6">
-        <Link to="/" aria-label="go home" className="mx-auto block size-fit">
-          <img src="/rsk.png" alt="RSK Logo" className="h-12 w-12" />
-        </Link>
-        <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
-          <Link
-            to="https://x.com/rasmickyy"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="X/Twitter"
-            className="text-muted-foreground hover:text-primary block"
-          >
-            <svg
-              className="size-6"
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M10.488 14.651L15.25 21h7l-7.858-10.478L20.93 3h-2.65l-5.117 5.886L8.75 3h-7l7.51 10.015L2.32 21h2.65zM16.25 19L5.75 5h2l10.5 14z"
-              ></path>
-            </svg>
-          </Link>
+    <footer className="border-t border-gray-800 bg-gradient-to-b from-transparent to-gray-950 py-16">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          {footerLinks.map((section, index) => (
+            <div key={index}>
+              <h4 className="font-semibold mb-4 text-white">{section.title}</h4>
+              <ul className="space-y-3">
+                {section.links.map((link, i) => (
+                  <li key={i}>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-        <span className="text-muted-foreground block text-center text-sm">
-          {" "}
-          © {new Date().getFullYear()} RSK, All rights reserved
-        </span>
+        
+        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-gray-800">
+          <div className="flex items-center space-x-2 mb-4 md:mb-0">
+            <div className="w-6 h-6 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center">
+              <Brain className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+              Chartilyze
+            </span>
+          </div>
+          <div className="text-gray-400 text-sm">
+            © 2025 Chartilyze. All rights reserved.
+          </div>
+        </div>
       </div>
     </footer>
   );
-}
+};

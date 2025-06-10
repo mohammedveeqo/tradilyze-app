@@ -1,174 +1,73 @@
-"use client";
-import { UserButton } from "@clerk/react-router";
-import { Github, Menu, X } from "lucide-react";
-import React, { useCallback } from "react";
-import { Link } from "react-router";
-import { Button } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
+// components/homepage/Navbar.tsx
+import { useState } from 'react';
+import { Brain, Menu, X } from 'lucide-react';
+import { navItems } from '../../constants/navigation';
 
-const menuItems = [
-  { name: "Home", href: "#hero" },
-  { name: "Features", href: "#features" },
-  { name: "Team", href: "#team" },
-  { name: "Pricing", href: "#pricing" },
-];
+interface NavbarProps {
+  scrollY: number;
+}
 
-export const Navbar = ({
-  loaderData,
-}: {
-  loaderData?: { isSignedIn: boolean; hasActiveSubscription: boolean };
-}) => {
-  const [menuState, setMenuState] = React.useState(false);
-  const [isScrolled, setIsScrolled] = React.useState(false);
+export const Navbar = ({ scrollY }: NavbarProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const handleNavClick = useCallback((href: string) => {
-    if (href.startsWith("#")) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-    }
-    setMenuState(false); // Close mobile menu
-  }, []);
-
-  // Simple computations don't need useMemo
-  const dashboardLink = !loaderData?.isSignedIn 
-    ? "/sign-up" 
-    : loaderData.hasActiveSubscription ? "/dashboard" : "/pricing";
-
-  const dashboardText = !loaderData?.isSignedIn 
-    ? "Get Started (Demo)"
-    : loaderData.hasActiveSubscription ? "Dashboard" : "Subscribe";
   return (
-    <header>
-      <nav
-        data-state={menuState && "active"}
-        className="fixed z-99 w-full px-2"
-      >
-        <div
-          className={cn(
-            "mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12",
-            isScrolled &&
-              "bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5"
-          )}
+    <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+      scrollY > 0 ? 'bg-black/95 backdrop-blur-md border-b border-gray-800/50' : 'bg-transparent'
+    }`}>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <div className="flex items-center space-x-2">
+          <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center">
+            <Brain className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+            Chartilyze
+          </span>
+        </div>
+
+        {/* Desktop Menu */}
+        <div className="hidden items-center gap-8 md:flex">
+          {navItems.map((item) => (
+            <a 
+              key={item.href}
+              href={item.href} 
+              className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
+            >
+              {item.label}
+            </a>
+          ))}
+          <button className="px-4 py-2 border border-gray-600 hover:border-emerald-500 hover:bg-emerald-500/10 transition-all duration-200 rounded-lg font-medium">
+            Sign In
+          </button>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button 
+          className="md:hidden p-2 hover:bg-gray-800/50 rounded-lg transition-colors" 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
-            <div className="flex w-full justify-between lg:w-auto">
-              <Link
-                to="/"
-                aria-label="home"
-                className="flex items-center space-x-2 font-semibold text-xl"
-                prefetch="viewport"
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="absolute w-full bg-black/95 backdrop-blur-xl border-b border-gray-800/50 md:hidden">
+          <div className="flex flex-col gap-4 p-6">
+            {navItems.map((item) => (
+              <a 
+                key={item.href}
+                href={item.href} 
+                className="text-gray-300 hover:text-white transition-colors py-2"
               >
-                <img src="/rsk.png" alt="RSK Logo" className="h-12 w-12" />
-              </Link>
-
-              <button
-                onClick={() => setMenuState(!menuState)}
-                aria-label={menuState == true ? "Close Menu" : "Open Menu"}
-                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
-              >
-                <Menu className="in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
-                <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
-              </button>
-            </div>
-
-            <div className="absolute inset-0 m-auto hidden size-fit lg:block">
-              <ul className="flex gap-8 text-sm">
-                {menuItems.map((item, index) => (
-                  <li key={index}>
-                    <div
-                      onClick={() => handleNavClick(item.href)}
-                      className="hover:cursor-pointer text-muted-foreground block duration-150 transition-colors"
-                    >
-                      <span>{item.name}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="bg-background in-data-[state=active]:block lg:in-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-              <div className="lg:hidden">
-                <ul className="space-y-6 text-base">
-                  {menuItems.map((item, index) => (
-                    <li key={index}>
-                      <button
-                        onClick={() => handleNavClick(item.href)}
-                        className="text-muted-foreground hover:cursor-pointer  block duration-150 transition-colors w-full text-left"
-                      >
-                        <span>{item.name}</span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Link
-                  to="https://github.com/michaelshimeles/react-starter-kit"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center"
-                >
-                  <Github className="w-5 h-5" />
-                </Link>
-                {loaderData?.isSignedIn ? (
-                  <div className="flex items-center gap-3">
-                    <Button asChild size="sm">
-                      <Link to={dashboardLink} prefetch="viewport">
-                        <span>{dashboardText}</span>
-                      </Link>
-                    </Button>
-                    <UserButton />
-                  </div>
-                ) : (
-                  <>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="sm"
-                      className={cn(isScrolled && "lg:hidden")}
-                    >
-                      <Link to="/sign-in" prefetch="viewport">
-                        <span>Login</span>
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      size="sm"
-                      className={cn(isScrolled && "lg:hidden")}
-                    >
-                      <Link to="/sign-up" prefetch="viewport">
-                        <span>Sign Up</span>
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      size="sm"
-                      className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
-                    >
-                      <Link to="/sign-up" prefetch="viewport">
-                        <span>{dashboardText}</span>
-                      </Link>
-                    </Button>
-                  </>
-                )}
-              </div>
-            </div>
+                {item.label}
+              </a>
+            ))}
+            <button className="w-full mt-4 px-4 py-2 border border-gray-600 hover:border-emerald-500 hover:bg-emerald-500/10 transition-all duration-200 rounded-lg font-medium">
+              Sign In
+            </button>
           </div>
         </div>
-      </nav>
-    </header>
+      )}
+    </nav>
   );
 };
