@@ -1,6 +1,6 @@
 "use client";
-import { ChartAreaInteractive } from "~/components/dashboard/chart-area-interactive";
-import { SectionCards } from "~/components/dashboard/section-cards";
+import { ChartAreaInteractive } from "app/components/dashboard/chart-area-interactive";
+import { SectionCards } from "app/components/dashboard/section-cards";
 
 export default function Page() {
   return (

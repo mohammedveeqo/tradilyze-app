@@ -1,5 +1,5 @@
 "use client";
-import SubscriptionStatus from "~/components/subscription-status";
+import SubscriptionStatus from "app/components/subscription-status";
 
 export default function Page() {
   return (

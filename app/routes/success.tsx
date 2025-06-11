@@ -2,14 +2,14 @@
 import { useQuery, useMutation } from "convex/react";
 import { useAuth } from "@clerk/react-router";
 import { Link } from "react-router";
-import { Button } from "~/components/ui/button";
+import { Button } from "app/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
+} from "app/components/ui/card";
 import { CheckCircle, ArrowRight, Loader2 } from "lucide-react";
 import { api } from "../../convex/_generated/api";
 import { useEffect } from "react";

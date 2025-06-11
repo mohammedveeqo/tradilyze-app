@@ -4,7 +4,7 @@ import { useAction, useMutation, useQuery } from "convex/react";
 import { Check, Loader2 } from "lucide-react";
 import * as React from "react";
 import { useState } from "react";
-import { Button } from "~/components/ui/button";
+import { Button } from "app/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,7 +12,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
+} from "app/components/ui/card";
 import { api } from "../../convex/_generated/api";
 
 export default function IntegratedPricing() {
